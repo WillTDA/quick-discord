@@ -33,7 +33,7 @@ client.on("message", async message => {
         }
     });
 
-bot.login("Discord Bot Token")
+client.login("Discord Bot Token")
 ```
 
 # Need Help? Join Our Discord Server!
