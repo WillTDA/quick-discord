@@ -1,3 +1,5 @@
+⚠ This Package is Still in Development! (Find any bugs? Join Our Discord Server, link is at the bottom of this page!)
+
 # QuickDiscord
 
 Create Commands for your Discord Bot with Ease with just a few Lines of Code.
@@ -24,7 +26,7 @@ client.on("message", async message => {
         await quickDiscord.ping(client, message)
     }
 
-    else if(message.content === "!help") {
+    else if(message.content === "help") {
         await quickDiscord.help(message, [
             { name: "Basic Commands", content: ["ping", "help", "poll"] },
             { name: "Music Commands", content: ["play", "stop", "seek"] },
