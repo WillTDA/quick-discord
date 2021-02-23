@@ -30,39 +30,33 @@ class QuickDiscord {
 
     /**
     * @param {Discord.Message} message The Message Sent by the User.
-    * @param {string[]} commands An Array of Command Names
-    * @param {number} commandsPerPage [Optional] How many Commands to put on each Help Page.
+    * @param {...categoryData[]} commandCategories The Layout of the Help Menu.
     * @async
+    * @example
+    *  const quickDiscord = require("quick-discord");
+    * 
+    * client.on("message", async message => {
+    *   if(message.content === "!help") {
+    *       await quickDiscord.help(message, [
+    *           { name: "Basic Commands", content: ["ping", "help", "poll"] },
+    *           { name: "Music Commands", content: ["play", "stop", "seek"] },
+    *           { name: "Admin Commands", content: ["kick", "warn", "ban"] },
+    *         ]);
+    *     }
+    * });
     */
 
-    static async help(message, commands, commandsPerPage) {
+    static async help(message, commandCategories) {
 
         if (!message) throw new Error("QuickDiscord Error: Message was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
-        if (!commands) throw new Error("QuickDiscord Error: List of Commands were not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
-
-
-        if (!commandsPerPage || commandsPerPage <= 0) {
-            return message.channel.send(
-                new Discord.MessageEmbed()
-                    .setTitle(`All Available Commands (${commands.length} Total)`)
-                    .setColor("RANDOM")
-                    .setDescription(commands.map(command => `\`${command}\``).join(", "))
-            )
-        }
-
-        if (!commands.length < commandsPerPage) throw new Error("QuickDiscord Error: commandsPerPage is more than the Amount of Commands. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+        if (!commandCategories) throw new Error("QuickDiscord Error: Commands were not Provided or Not Provided Correctly. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
 
         let embeds = [];
-        let k = commandsPerPage
-        for (let i = 0; i < commands.length; i += commandsPerPage) {
-            let commandsCurrent = commands.slice(i, k);
-            let j = i;
-            k += commandsPerPage
-            let commandInfo = commandsCurrent.map(command => `\`${command}\``).join(", ")
+        for (let i = 0; i < commandCategories.length; i++) {
             let embed = new Discord.MessageEmbed()
-                .setTitle(`All Available Commands (${commands.length} Total)`)
+                .setTitle(`${commandCategories[i].name} (${commandCategories[i].content.length} Total Commands)`)
                 .setColor("RANDOM")
-                .setDescription(commandInfo)
+                .setDescription(commandCategories[i].content.map(command => `\`${command}\``).join(", "))
             embeds.push(embed);
         }
 
