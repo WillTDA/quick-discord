@@ -25,7 +25,6 @@ client.on("message", async message => {
     if (message.content === "!ping") {
         await quickDiscord.ping(client, message)
     }
-
     else if(message.content === "!help") {
         await quickDiscord.help(message, [
             { name: "Basic Commands", content: ["ping", "help", "poll"] },
