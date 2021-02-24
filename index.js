@@ -40,7 +40,7 @@ module.exports = {
 
     /**
     * @param {Discord.Message} message The Message Sent by the User.
-    * @param {JSON} commandData The Layout of the Help Menu.
+    * @param {Object} commandData The Layout of the Help Menu.
     * @async
     * @returns {Discord.Message}
     * @example
@@ -49,9 +49,9 @@ module.exports = {
     * client.on("message", async message => {
     *     if(message.content === "!help") {
     *         quickDiscord.help(message, {
-    *             "Basic Commands": ["ping", "help", "poll", "weather", "trump"],
-    *             "Music Commands": ["play", "stop", "seek", "pause", "resume", "loop"],
-    *             "Admin Commands": ["kick", "warn", "ban", "reactionrole"]
+    *             "Basic Commands": ["ping", "help", "poll"],
+    *             "Music Commands": ["play", "stop", "seek"],
+    *             "Admin Commands": ["kick", "warn", "ban"]
     *         });
     *     }
     * });
