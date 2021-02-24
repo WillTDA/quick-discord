@@ -1,6 +1,6 @@
 {
   "name": "quick-discord",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A powerful package to allow Discord Bot Developers to Create Commands Quickly and Easily.",
   "main": "index.js",
   "scripts": {
