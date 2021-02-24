@@ -6,13 +6,13 @@ Create Commands for your Discord Bot with Ease with just a few Lines of Code.
 
 # Install Package
 
-Let's install this package into your Discord Bot Project.
+Let's take a look at how you can install this package into your Discord Bot Project.
 
 `npm i quick-discord --save`
 
 # Example Code
 
-```
+```js
 const Discord = require("discord.js");
 const quickDiscord = require("quick-discord");
 const client = new Discord.Client()
@@ -32,8 +32,8 @@ client.on("message", async message => {
             { name: "Music Commands", content: ["play", "stop", "seek"] },
             { name: "Admin Commands", content: ["kick", "warn", "ban"] },
         ]);
-        }
-    });
+    }
+});
 
 client.login("Discord Bot Token")
 ```
