@@ -4,10 +4,18 @@ const paginate = require("discord.js-pagination")
 module.exports = {
 
     /**
-       * @param {Discord.Message} message The Message Sent by the User.
-       * @param {Discord.Client} client The Discord Client.
-       * @returns {Discord.Message}
-       * @async
+    * @param {Discord.Message} message The Message Sent by the User.
+    * @param {Discord.Client} client The Discord Client.
+    * @returns {Discord.Message}
+    * @async
+    * @example
+    *  const quickDiscord = require("quick-discord");
+    * 
+    * client.on("message", async message => {
+    *   if(message.content === "!ping") {
+    *       quickDiscord.ping(client, message)
+    *     }
+    * });
        */
 
     async ping(client, message) {
@@ -40,7 +48,7 @@ module.exports = {
     * 
     * client.on("message", async message => {
     *   if(message.content === "!help") {
-    *       await quickDiscord.help(message, [
+    *       quickDiscord.help(message, [
     *           { name: "Basic Commands", content: ["ping", "help", "poll"] },
     *           { name: "Music Commands", content: ["play", "stop", "seek"] },
     *           { name: "Admin Commands", content: ["kick", "warn", "ban"] },
