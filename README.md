@@ -22,15 +22,15 @@ client.on("ready", () => {
 })
 
 client.on("message", async message => {
-    if (message.content === "!ping") {
-        await quickDiscord.ping(client, message)
+    if (message.content === "ping") {
+        quickDiscord.ping(client, message)
     }
-    else if(message.content === "!help") {
-        await quickDiscord.help(message, [
-            { name: "Basic Commands", content: ["ping", "help", "poll"] },
-            { name: "Music Commands", content: ["play", "stop", "seek"] },
-            { name: "Admin Commands", content: ["kick", "warn", "ban"] }
-        ]);
+    else if (message.content === "help") {
+        quickDiscord.help(message, {
+            "Basic Commands": ["ping", "help", "poll", "weather", "trump"],
+            "Music Commands": ["play", "stop", "seek", "pause", "resume", "loop"],
+            "Admin Commands": ["kick", "warn", "ban", "reactionrole"]
+        });
     }
 });
 

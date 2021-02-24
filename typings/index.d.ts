@@ -1,4 +1,3 @@
 interface categoryData {
-    name: String;
-    commands: any[];
+    name: String, commands: any[];
 }

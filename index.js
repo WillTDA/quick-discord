@@ -12,8 +12,8 @@ module.exports = {
     *  const quickDiscord = require("quick-discord");
     * 
     * client.on("message", async message => {
-    *   if(message.content === "!ping") {
-    *       quickDiscord.ping(client, message)
+    *     if(message.content === "!ping") {
+    *         quickDiscord.ping(client, message)
     *     }
     * });
        */
@@ -40,34 +40,38 @@ module.exports = {
 
     /**
     * @param {Discord.Message} message The Message Sent by the User.
-    * @param {...categoryData[]} commandCategories The Layout of the Help Menu.
+    * @param {JSON} commandData The Layout of the Help Menu.
     * @async
     * @returns {Discord.Message}
     * @example
     *  const quickDiscord = require("quick-discord");
     * 
     * client.on("message", async message => {
-    *   if(message.content === "!help") {
-    *       quickDiscord.help(message, [
-    *           { name: "Basic Commands", commands: ["ping", "help", "poll"] },
-    *           { name: "Music Commands", commands: ["play", "stop", "seek"] },
-    *           { name: "Admin Commands", commands: ["kick", "warn", "ban"] }
-    *         ]);
+    *     if(message.content === "!help") {
+    *         quickDiscord.help(message, {
+    *             "Basic Commands": ["ping", "help", "poll", "weather", "trump"],
+    *             "Music Commands": ["play", "stop", "seek", "pause", "resume", "loop"],
+    *             "Admin Commands": ["kick", "warn", "ban", "reactionrole"]
+    *         });
     *     }
     * });
     */
 
-    async help(message, commandCategories) {
+    async help(message, commandData) {
 
         if (!message) return console.log("QuickDiscord Error: Message was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
-        if (!commandCategories) return console.log("QuickDiscord Error: Commands were not Provided or Not Provided Correctly. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+        if (!commandData) return console.log("QuickDiscord Error: Commands were not Provided or Not Provided Correctly. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+
+        let commandCategories = JSON.stringify(commandData);
+        commandCategories = JSON.parse(commandCategories);
 
         let embeds = [];
-        for (let i = 0; i < commandCategories.length; i++) {
+        for (let i in commandCategories) {
+
             let embed = new Discord.MessageEmbed()
-                .setTitle(`${commandCategories[i].name} (${commandCategories[i].commands.length} Total Commands)`)
+                .setTitle(`${i} (${commandCategories[i].length} Total Commands)`)
                 .setColor("RANDOM")
-                .setDescription(commandCategories[i].commands.map(command => `\`${command}\``).join(", "))
+                .setDescription(commandCategories[i].map(command => `\`${command}\``).join(", "))
             embeds.push(embed);
         }
 
