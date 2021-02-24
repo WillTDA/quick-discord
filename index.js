@@ -51,7 +51,7 @@ module.exports = {
     *       quickDiscord.help(message, [
     *           { name: "Basic Commands", content: ["ping", "help", "poll"] },
     *           { name: "Music Commands", content: ["play", "stop", "seek"] },
-    *           { name: "Admin Commands", content: ["kick", "warn", "ban"] },
+    *           { name: "Admin Commands", content: ["kick", "warn", "ban"] }
     *         ]);
     *     }
     * });
