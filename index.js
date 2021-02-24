@@ -1,18 +1,19 @@
 const Discord = require("discord.js");
 const paginate = require("discord.js-pagination")
 
-class QuickDiscord {
+module.exports = {
 
     /**
        * @param {Discord.Message} message The Message Sent by the User.
        * @param {Discord.Client} client The Discord Client.
+       * @returns {Discord.Message}
        * @async
        */
 
-    static async ping(client, message) {
+    async ping(client, message) {
 
-        if (!client) throw new Error("QuickDiscord Error: Client was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
-        if (!message) throw new Error("QuickDiscord Error: Message was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+        if (!client) return console.log("QuickDiscord Error: Client was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+        if (!message) return console.log("QuickDiscord Error: Message was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
 
         const msg = await message.channel.send("**Pinging Server... 🏓**");
         let pingMessage = await message.channel.send("**Pong! 🏓**")
@@ -24,14 +25,16 @@ class QuickDiscord {
             ])
             .setTimestamp(new Date())
             .setColor("RED")
-        pingMessage.edit(updatedPingMessage)
-        msg.delete({ timeout: 1 })
-    }
+        await pingMessage.delete()
+        await message.channel.send(updatedPingMessage)
+        await msg.delete()
+    },
 
     /**
     * @param {Discord.Message} message The Message Sent by the User.
     * @param {...categoryData[]} commandCategories The Layout of the Help Menu.
     * @async
+    * @returns {Discord.Message}
     * @example
     *  const quickDiscord = require("quick-discord");
     * 
@@ -46,10 +49,10 @@ class QuickDiscord {
     * });
     */
 
-    static async help(message, commandCategories) {
+    async help(message, commandCategories) {
 
-        if (!message) throw new Error("QuickDiscord Error: Message was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
-        if (!commandCategories) throw new Error("QuickDiscord Error: Commands were not Provided or Not Provided Correctly. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+        if (!message) return console.log("QuickDiscord Error: Message was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+        if (!commandCategories) return console.log("QuickDiscord Error: Commands were not Provided or Not Provided Correctly. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
 
         let embeds = [];
         for (let i = 0; i < commandCategories.length; i++) {
@@ -64,5 +67,3 @@ class QuickDiscord {
         else paginate(message, embeds, ["⏪", "⏩"], 60000)
     }
 }
-
-module.exports = QuickDiscord;
