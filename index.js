@@ -49,9 +49,9 @@ module.exports = {
     * client.on("message", async message => {
     *   if(message.content === "!help") {
     *       quickDiscord.help(message, [
-    *           { name: "Basic Commands", content: ["ping", "help", "poll"] },
-    *           { name: "Music Commands", content: ["play", "stop", "seek"] },
-    *           { name: "Admin Commands", content: ["kick", "warn", "ban"] }
+    *           { name: "Basic Commands", commands: ["ping", "help", "poll"] },
+    *           { name: "Music Commands", commands: ["play", "stop", "seek"] },
+    *           { name: "Admin Commands", commands: ["kick", "warn", "ban"] }
     *         ]);
     *     }
     * });
@@ -65,9 +65,9 @@ module.exports = {
         let embeds = [];
         for (let i = 0; i < commandCategories.length; i++) {
             let embed = new Discord.MessageEmbed()
-                .setTitle(`${commandCategories[i].name} (${commandCategories[i].content.length} Total Commands)`)
+                .setTitle(`${commandCategories[i].name} (${commandCategories[i].commands.length} Total Commands)`)
                 .setColor("RANDOM")
-                .setDescription(commandCategories[i].content.map(command => `\`${command}\``).join(", "))
+                .setDescription(commandCategories[i].commands.map(command => `\`${command}\``).join(", "))
             embeds.push(embed);
         }
 

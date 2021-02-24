@@ -1,4 +1,4 @@
 interface categoryData {
     name: String;
-    content: any[];
+    commands: any[];
 }
