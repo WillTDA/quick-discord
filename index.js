@@ -6,7 +6,7 @@ module.exports = {
     /**
     * @param {Discord.Message} message The Message Sent by the User.
     * @param {Discord.Client} client The Discord Client.
-    * @returns {Discord.Message}
+    * @returns {Discord.Message} Discord.Message
     * @async
     * @example
     *  const quickDiscord = require("quick-discord");
@@ -42,7 +42,7 @@ module.exports = {
     * @param {Discord.Message} message The Message Sent by the User.
     * @param {Object} commandData The Layout of the Help Menu.
     * @async
-    * @returns {Discord.Message}
+    * @returns {Discord.Message} Discord.Message
     * @example
     *  const quickDiscord = require("quick-discord");
     * 
