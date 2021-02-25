@@ -34,7 +34,7 @@ client.on("message", async message => {
             "Admin Commands": ["kick", "warn", "ban"]
         });
     }
-    else if(message.content.startsWith(`${PREFIX}ping`)) {
+    else if(message.content.startsWith(`${PREFIX}poll`)) {
         quickDiscord.poll(message, pollTopic, time) //time is optional
     }
 });
