@@ -125,7 +125,7 @@ module.exports = {
             let timedpollEmbed = new Discord.MessageEmbed()
                 .setAuthor(`🗳️ New Timed Vote! (Created by ${message.author.tag})`, message.author.displayAvatarURL())
                 .addField("Poll Topic", pollTopic)
-                .addField("Poll Ending Time", `${moment().add(voteTime).calendar()}`)
+                .addField("Poll Ending Time", `${moment().add(time).calendar()}`)
                 .setColor("RANDOM")
             message.delete()
 

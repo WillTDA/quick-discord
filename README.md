@@ -35,7 +35,7 @@ client.on("message", async message => {
         });
     }
     else if(message.content.startsWith(`${PREFIX}poll`)) {
-        quickDiscord.poll(message, pollTopic, time) //time is optional
+        quickDiscord.poll(message, "Is this a Good Package?", 30000) //time is optional
     }
 });
 
