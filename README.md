@@ -15,22 +15,27 @@ Let's take a look at how you can install this package into your Discord Bot Proj
 ```js
 const Discord = require("discord.js");
 const quickDiscord = require("quick-discord");
-const client = new Discord.Client()
+const client = new Discord.Client();
+
+const PREFIX = "!";
 
 client.on("ready", () => {
     console.log("Bot is Online")
-})
+});
 
 client.on("message", async message => {
-    if (message.content === "ping") {
+    if(message.content.startsWith(`${PREFIX}ping`)) {
         quickDiscord.ping(client, message)
     }
-    else if (message.content === "help") {
+    else if(message.content.startsWith(`${PREFIX}help`)) {
         quickDiscord.help(message, {
             "Basic Commands": ["ping", "help", "poll"],
             "Music Commands": ["play", "stop", "seek"],
             "Admin Commands": ["kick", "warn", "ban"]
         });
+    }
+    else if(message.content.startsWith(`${PREFIX}ping`)) {
+        quickDiscord.poll(message, pollTopic, time) //time is optional
     }
 });
 

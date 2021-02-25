@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const paginate = require("discord.js-pagination")
+const paginate = require("discord.js-pagination");
+const prompter = require("discordjs-prompter");
+const moment = require("moment");
 
 module.exports = {
 
@@ -11,8 +13,10 @@ module.exports = {
     * @example
     *  const quickDiscord = require("quick-discord");
     * 
+    * const PREFIX = "!";
+    * 
     * client.on("message", async message => {
-    *     if(message.content === "!ping") {
+    *     if(message.content.startsWith(`${PREFIX}ping`)) {
     *         quickDiscord.ping(client, message)
     *     }
     * });
@@ -46,8 +50,10 @@ module.exports = {
     * @example
     *  const quickDiscord = require("quick-discord");
     * 
+    * const PREFIX = "!";
+    * 
     * client.on("message", async message => {
-    *     if(message.content === "!help") {
+    *     if(message.content.startsWith(`${PREFIX}help`)) {
     *         quickDiscord.help(message, {
     *             "Basic Commands": ["ping", "help", "poll"],
     *             "Music Commands": ["play", "stop", "seek"],
@@ -77,5 +83,71 @@ module.exports = {
 
         if (embeds.length === 1) return message.channel.send(embeds[0])
         else paginate(message, embeds, ["⏪", "⏩"], 60000)
+    },
+
+    /**
+    * @param {Discord.Message} message The Message Sent by the User.
+    * @param {string} pollTopic The Text to be Displayed on the Poll Embed.
+    * @param {number} time [Optional] Amount of Time in Milliseconds before the Poll Ends.
+    * @returns {Discord.Message} Discord.Message
+    * @async
+    * @example
+    *  const quickDiscord = require("quick-discord");
+    * 
+    * const PREFIX = "!";
+    * 
+    * client.on("message", async message => {
+    *     if(message.content.startsWith(`${PREFIX}poll`)) {
+    *         quickDiscord.poll(message, pollTopic, time) //time is optional
+    *     }
+    * });
+    */
+
+    async poll(message, pollTopic, time) {
+        if (!pollTopic) return console.log("QuickDiscord Error: Poll Topic was not Provided. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+
+        if (!time) {
+            let pollEmbed = new Discord.MessageEmbed()
+                .setAuthor(`📋 New Poll! (Created by ${message.author.tag})`, message.author.displayAvatarURL())
+                .addField("Poll Topic", pollTopic)
+                .setColor("RANDOM")
+            message.channel.send(pollEmbed).then(messageReaction => {
+                messageReaction.react("✅");
+                messageReaction.react("❌");
+                message.delete();
+            });
+        }
+        else {
+            if (isNaN(time)) return console.log("QuickDiscord Error: Poll Time has to be a number, recieved string. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+            if (time > 1728000000) console.log("QuickDiscord Error: Poll Time is Over the 20 Days Limit. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+            if (time < 10000) console.log("QuickDiscord Error: Poll Time is Shorter than 10 Seconds. Need Help? Join Our Discord Server at 'https://discord.gg/P2g24jp'")
+
+            let timedpollEmbed = new Discord.MessageEmbed()
+                .setAuthor(`🗳️ New Timed Vote! (Created by ${message.author.tag})`, message.author.displayAvatarURL())
+                .addField("Poll Topic", pollTopic)
+                .addField("Poll Ending Time", `${moment().add(voteTime).calendar()}`)
+                .setColor("RANDOM")
+            message.delete()
+
+            prompter.vote(message.channel, {
+                question: timedpollEmbed,
+                choices: ['✅', '❌'],
+                timeout: time,
+                deleteMessage: true
+            }).then(async (response) => {
+                const voteWinner = response.emojis[0];
+                let voteWinnerText = `${voteWinner.emoji} has Won with ${response.emojis[0].count} Votes! (${response.emojis[1].emoji} had ${response.emojis[1].count} Votes)`
+                if (response.emojis[0].count == response.emojis[1].count) voteWinnerText = `This Timed Vote was a Draw! (Both Choices had ${response.emojis[0].count} Votes)`
+                const voteFinished = new Discord.MessageEmbed()
+                    .setAuthor(`🗳️ Timed Vote Ended! (Created by ${message.author.tag})`, message.author.displayAvatarURL())
+                    .addField("Voting Topic", pollTopic)
+                    .addField("Winning Vote", voteWinnerText)
+                    .setColor("RANDOM")
+                    .setFooter(`Vote Ended: ${moment(new Date).format('LLL')}`)
+                await message.channel.send(voteFinished)
+            });
+        }
     }
+
+
 }

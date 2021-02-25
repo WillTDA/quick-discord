@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "discord.js-pagination": "^1.0.3"
+    "discord.js-pagination": "^1.0.3",
+    "discordjs-prompter": "^2.0.4",
+    "moment": "^2.29.1"
   }
 }
